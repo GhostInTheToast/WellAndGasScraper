@@ -1,6 +1,5 @@
 from flask import Flask, request, jsonify
 import sqlite3
-from shapely.geometry import Point, Polygon
 from database import get_well_by_api, get_wells_in_polygon
 
 

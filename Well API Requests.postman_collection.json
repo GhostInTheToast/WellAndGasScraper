@@ -1,0 +1,65 @@
+{
+	"info": {
+		"_postman_id": "87294239-5d3f-43e6-bec0-b4113c4060f7",
+		"name": "Well API Requests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32852679",
+		"_collection_link": "https://gold-water-557111.postman.co/workspace/OpenAPI-Vector-Database~f1955caf-ec66-485e-b8a0-542c901c23cd/collection/32852679-87294239-5d3f-43e6-bec0-b4113c4060f7?action=share&source=collection_link&creator=32852679"
+	},
+	"item": [
+		{
+			"name": "Get Individual Well by API",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/well/30-015-25325",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"well",
+						"30-015-25325"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Geospatial Polygon Search",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"polygon\": [\n    [30.1, -100.5],  // Point 1 (bottom-left)\n    [34.1, -100.3],  // Point 2 (bottom-right)\n    [34.3, -103.3],  // Point 3 (top-right)\n    [30.3, -105.5],  // Point 4 (top-left)\n    [30.1, -100.5]   // Closing the rectangle (bottom-left)\n  ]\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/wells-in-polygon",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"wells-in-polygon"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
