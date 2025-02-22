@@ -8,9 +8,13 @@ app = Flask(__name__)
 
 # Getting db connection
 def get_db_connection():
-    conn = sqlite3.connect("../data/wells.db")
-    conn.row_factory = sqlite3.Row
-    return conn
+    try:
+        conn = sqlite3.connect("../data/wells.db")
+        conn.row_factory = sqlite3.Row
+        return conn
+    except sqlite3.Error as e:
+        print(f"Database connection error: {e}")
+        return None
 
 
 
