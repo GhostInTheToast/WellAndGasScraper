@@ -1,7 +1,7 @@
 import sqlite3
 from typing import List, Dict, Tuple
 
-DB_PATH = "data/wells.db"  # DB file location
+DB_PATH = "../data/wells.db"  # DB file location
 
 
 # Function for initializing the database
@@ -56,12 +56,12 @@ def insert_well_data(data: Dict):
             "Potash Waiver", "Spud Date", "Last Inspection", "TVD", "API", "Latitude", "Longitude", "CRS"
         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     """, (
-        data.get("Operator"), data.get("Status"), data.get("Well Type"), data.get("Work Type"),
-        data.get("Directional Status"), data.get("Multi-Lateral"), data.get("Mineral Owner"),
-        data.get("Surface Owner"), data.get("Surface Location"), data.get("GL Elevation"),
-        data.get("KB Elevation"), data.get("DF Elevation"), data.get("Single/Multiple Completion"),
-        data.get("Potash Waiver"), data.get("Spud Date"), data.get("Last Inspection"),
-        data.get("TVD"), data.get("API"), data.get("Latitude"), data.get("Longitude"), data.get("CRS")
+        data["operator"], data['status'], data["well_type"], data['work_type'],
+        data['directional_status'], data['multi_lateral'], data['mineral_owner'],
+        data['surface_owner'], data['surface_location'], data['gl_elevation'],
+        data['kb_elevation'], data['df_elevation'], data['single_or_multiple_completion'],
+        data['potash_waiver'], data['spud_date'], data['last_inspection'],
+        data['tvd'], data['API'], data['Latitude'], data['Longitude'], data['CRS']
     ))
 
     conn.commit()

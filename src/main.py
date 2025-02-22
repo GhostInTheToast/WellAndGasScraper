@@ -2,6 +2,8 @@ import time
 import random
 from scraper import scrape_well_data, read_api_numbers
 from database import insert_well_data
+from src.database import initialize_db
+
 
 def main():
     api_numbers = read_api_numbers('../data/apis_pythondev_test.csv')
@@ -11,6 +13,7 @@ def main():
         print(f"Scraping data for API number: {api_number}")
 
         well_data = scrape_well_data(api_number)
+        print(well_data['operator'], 'is the operator lmao')
 
         if well_data is None:
             print(f"Skipping API {api_number} due to repeated failures.")
@@ -25,6 +28,8 @@ def main():
         time.sleep(sleep_time)
 
         print(well_data)
+
+        initialize_db()
 
         if well_data:
             print(f"Inserting data for API {api_number} into database")
