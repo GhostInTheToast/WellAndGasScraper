@@ -1,9 +1,1 @@
 test case stuff
-
-load the data into db
-
-comments
-
-readme
-
-postman collection

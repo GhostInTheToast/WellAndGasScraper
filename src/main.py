@@ -1,45 +1,58 @@
 import time
 import random
+import logging
 from scraper import scrape_well_data, read_api_numbers
 from database import insert_well_data
 from src.database import initialize_db
 
+# Set up logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-# This code is for doing the scraping using that scraper code etc.
-# then after this is done, you can run app.py instead and test api
-
+# Main entry point for scraping and inserting well data into the database
 def main():
-    api_numbers = read_api_numbers('../data/apis_pythondev_test.csv') # extracting the api numbers
+    """
+    Main function for scraping well data for a list of API numbers and inserting it into the database.
 
-    # counter is for debugging purposes and progress tracking.
+    Steps:
+    1. Reads the list of API numbers from a CSV file.
+    2. Scrapes well data for each API number using the scraper.
+    3. Inserts the scraped data into the database.
+    4. Tracks the progress and handles failures.
+    5. Avoids throttling by sleeping for a randomized duration between requests.
+    """
+    # Reading the API numbers from the CSV file
+    api_numbers = read_api_numbers('../data/apis_pythondev_test.csv')  # Extracting the API numbers
+
+    # Counter for tracking successful scrapes
     scraped_counter_total = 0
     for api_number in api_numbers:
-        print(f"Scraping data for API number: {api_number}")
+        # Scraping the well data for the current API number
         well_data = scrape_well_data(api_number)
 
-        print(well_data)
-
         if well_data is None:
-            print(f"Skipping API {api_number} due to repeated failures.")
-            continue  # Skip to next api if scraping failed
+            logging.warning(f"Skipping API {api_number} due to repeated failures.")
+            continue  # Skipping the current API number if scraping failed
 
+        # Incrementing the successful scrape counter
         scraped_counter_total += 1
-        print(f"Total successful scrapes so far: {scraped_counter_total}")
+        logging.info(f"Total successful scrapes so far: {scraped_counter_total}")
 
-        # Add randomized sleep to evade throttling
+        # Initializing the database if it doesn't exist yet
+        initialize_db()  # Making the database if it doesn't exist
+
+        # Inserting the scraped data into the database
+        if well_data:
+            logging.info(f"Inserting data for API {api_number} into the database.")
+            insert_well_data(well_data)  # Inserting the record into the database
+        else:
+            logging.error(f"Failed to scrape data for API {api_number}")
+
+        # Adding randomized sleep to evade throttling
         sleep_time = random.uniform(3, 7)
-        print("\n" + f"Sleeping for {sleep_time:.2f} seconds...")
+        logging.info(f"Sleeping for {sleep_time:.2f} seconds...\n\n")
         time.sleep(sleep_time)
 
 
-        # This section is doing a bunch of database stuff and adding this stuff to the db
-        initialize_db() # Make the db if it doesnt exist yet
-
-        if well_data:
-            print(f"Inserting data for API {api_number} into database")
-            insert_well_data(well_data) # Insert the record into the db
-        else:
-            print(f"Failed to scrape data for API {api_number}")
-
+# Running the main function when the script is executed
 if __name__ == "__main__":
     main()

@@ -2,7 +2,14 @@
 
 This project provides a solution for scraping well data based on API numbers, inserting the scraped data into a database, and serving the data through a Flask API.
 
+**NOTE:** Does not use multithreading yet. I figured I would rather just get the job done than deal with balancing throttling and multithread. 
+
 ## Project Overview
+
+Uses python 3.12.0
+
+I have included my PostMan collection to test the api also.
+
 
 The project is broken down into three main components:
 
@@ -17,8 +24,19 @@ The project is broken down into three main components:
 - Avoiding throttling by introducing randomized sleep times between requests.
 - Exposing well data via a Flask API.
 - Retry mechanism to handle request failures during scraping.
+- Nice clean logging as shown below:
+
+![Logging](images/logging.png)
 
 
-You can use SQLite DB Browser (its free) to check the data in the db file. Itll look like this:
+## The Code
 
-![test](images/SQLiteDbBrowser.png)
+- The main.py class is like a regular main driver class that calls other class methods to scrape the data and load it into the db file
+- The app.py must be run after the above file once the scraping is done to start the flask API which you can then test with the PostMan collection I included too
+
+
+
+
+You can also use SQLite DB Browser (its free) to check the data in the db file. Itll look like this:
+
+![SQLiteDbBrowser](images/SQLiteDbBrowser.png)
