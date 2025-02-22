@@ -21,4 +21,4 @@ The project is broken down into three main components:
 
 You can use SQLite DB Browser (its free) to check the data in the db file. Itll look like this:
 
-![test]("images/SQLiteDbBrowser.png")
+![test](images/SQLiteDbBrowser.png)
