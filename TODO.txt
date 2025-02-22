@@ -1,0 +1,15 @@
+attempt multithreading, though throttling is an issue right now
+
+test case stuff
+
+load the data into db
+
+api
+
+comments
+
+readme
+
+postman collection
+
+url timeout retry
