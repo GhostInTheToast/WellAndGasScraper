@@ -35,6 +35,7 @@ The project is broken down into three main components:
 - The app.py must be run after the above file once the scraping is done to start the flask API which you can then test with the PostMan collection I included too
 
 
+note: APIsInsideGivenPolygon.txt contains the apis inside the requested polygon.
 
 
 You can also use SQLite DB Browser (its free) to check the data in the db file. Itll look like this:
