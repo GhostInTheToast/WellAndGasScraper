@@ -2,4 +2,4 @@
  API and scraper project to scrape wells
 
 
-![test]("/images/SQLiteDbBrowser.png")
+![test]("images/SQLiteDbBrowser.png")
