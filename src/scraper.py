@@ -84,9 +84,10 @@ def scrape_well_data(api_number):
 
 # Function to read the API numbers from the CSV file
 def read_api_numbers(file_path):
-    with open(file_path, 'r') as f:
-        reader = csv.DictReader(f)  # Using DictReader to handle the header
-        return [row['api'] for row in reader]  # Extract the API numbers based on the 'api' header
+    with open(file_path, 'r', encoding='utf-8-sig') as f:  # Handles BOM
+        reader = csv.DictReader(f)
+        print(reader.fieldnames)  # Debugging: Check actual field names
+        return [row['api'] for row in reader]  # Extract API numbers
 
 
 # Multithreaded scraping function [not being used but its something to do eventually maybe]
