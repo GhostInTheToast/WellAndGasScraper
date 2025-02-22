@@ -7,18 +7,16 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 
 # Function to scrape data for a single API
 def scrape_well_data(api_number):
+    # Building the url based on the api num passed in
     url = f"https://wwwapps.emnrd.nm.gov/OCD/OCDPermitting/Data/WellDetails.aspx?api={api_number}"
 
     try:
-        # here im adding some randomized delay to try to counter the site throttling me etc when multithreading
-        # time.sleep(random.uniform(1, 3))
-        # it didnt work for my multithread, so im not gonna multithread for now, hence dont need above line of code.
-
         response = fetch_with_retries(url)
         if not response:
-            return None  # Skip this API if it keeps failing
+            return None  # Skip this API number if it keeps failing
         soup = BeautifulSoup(response.text, 'lxml')
 
+        # the data field names are mapped to the scraped html id here
         fields = {
             "operator": "ctl00_ctl00__main_main_ucGeneralWellInformation_lblOperator",
             "status": "ctl00_ctl00__main_main_ucGeneralWellInformation_lblStatus",
@@ -67,12 +65,10 @@ def scrape_well_data(api_number):
             data[key] = tag.text.strip() if tag else None
 
         # operator data needs the id number of the company before the name removed. we are doing so below.
-        # finding the last closing bracket
-        last_bracket_index = data['operator'].rfind("]")
+        last_bracket_index = data['operator'].rfind("]")   # finding the last closing bracket
 
-        # extracting everything after the last bracket
+        # extracting everything after the last bracket and finally storing it
         cleaned_operator = data['operator'][last_bracket_index + 1:].strip() if last_bracket_index != -1 else data['operator']
-
         data['operator'] = cleaned_operator
 
         # Replace empty strings with None, ensuring None values are not processed
@@ -85,13 +81,15 @@ def scrape_well_data(api_number):
         print(f"Error scraping API {api_number}: {e}")
         return None
 
+
 # Function to read the API numbers from the CSV file
 def read_api_numbers(file_path):
     with open(file_path, 'r') as f:
-        reader = csv.reader(f)
-        return [row[0] for row in reader]  # Assuming the API numbers are in the first column
+        reader = csv.DictReader(f)  # Using DictReader to handle the header
+        return [row['api'] for row in reader]  # Extract the API numbers based on the 'api' header
 
-# Multithreaded scraping function
+
+# Multithreaded scraping function [not being used but its something to do eventually maybe]
 def scrape_all_apis(api_numbers, max_threads=10):
     results = []
     with ThreadPoolExecutor(max_workers=max_threads) as executor:
@@ -112,7 +110,7 @@ def scrape_all_apis(api_numbers, max_threads=10):
     return results
 
 
-
+# Function to fetch but retry also!
 def fetch_with_retries(url, max_retries=5):
     for attempt in range(max_retries):
         try:
@@ -127,7 +125,4 @@ def fetch_with_retries(url, max_retries=5):
             return None
     print("Max retries reached. Skipping.")
     return None
-
-
-
 

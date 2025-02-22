@@ -5,6 +5,7 @@ from database import get_well_by_api, get_wells_in_polygon
 
 app = Flask(__name__)
 
+
 # Getting db connection
 def get_db_connection():
     try:
@@ -29,15 +30,12 @@ def get_well(api_number):
 # Endpoint 2 for getting the API numbers of ALL wells within a given polygon
 @app.route('/wells-in-polygon', methods=['POST'])
 def get_wells():
-    polygon = request.json.get("polygon", [])
+    polygon = request.json.get("polygon", []) # getting the polygon points from the json request body
     if not polygon:
         return jsonify({"error": "Polygon data required"}), 400
 
     api_numbers = get_wells_in_polygon(polygon)
     return jsonify({"api_numbers": api_numbers})
-
-
-
 
 
 if __name__ == "__main__":
