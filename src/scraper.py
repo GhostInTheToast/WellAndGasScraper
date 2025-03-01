@@ -108,6 +108,7 @@ def read_api_numbers(file_path):
 
 
 # Function to check if the well is within the given geospatial polygon
+# Didn't actually use this btw, this experimental unused code
 def is_within_polygon(latitude, longitude, polygon):
     """
     Checking if a well's coordinates are within a specified geospatial polygon.
