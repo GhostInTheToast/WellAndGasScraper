@@ -61,6 +61,17 @@ def read_database():
     for row in rows:
         print(row)
 
+def clear_database():
+    """
+    This function clears the whole api_well_data. This is specific for this project, only clears that specific table.
+    """
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+
+    cursor.execute("DELETE FROM api_well_data;")
+    conn.commit()
+    cursor.execute("VACUUM;")
+
     conn.close()
 
 # Inserting a single well record into the database

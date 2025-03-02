@@ -2,7 +2,7 @@ import time
 import random
 import logging
 from scraper import scrape_well_data, read_api_numbers
-from database import insert_well_data, read_database
+from database import insert_well_data, read_database, clear_database
 from src.database import initialize_db
 
 # Set up logging
@@ -52,7 +52,10 @@ def main2():
         logging.info(f"Sleeping for {sleep_time:.2f} seconds...\n\n")
         time.sleep(sleep_time)
 
+    read_database()
+
 def main():
+    # clear_database()
     read_database()
 
 # Running the main function when the script is executed
