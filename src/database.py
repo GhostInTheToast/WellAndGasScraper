@@ -61,6 +61,7 @@ def read_database():
     for row in rows:
         print(row)
 
+    conn.close()
 
 # Inserting a single well record into the database
 def insert_well_data(data: Dict):
