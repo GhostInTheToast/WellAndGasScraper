@@ -45,6 +45,22 @@ def initialize_db():
     conn.commit()
     conn.close()
 
+def read_database():
+    """
+    This function reads the whole database. (Intended for use after scraping)
+    """
+    conn =  sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+
+    cursor.execute("""
+            SELECT * FROM api_well_data
+        """)
+
+    rows = cursor.fetchall()
+
+    for row in rows:
+        print(row)
+
 
 # Inserting a single well record into the database
 def insert_well_data(data: Dict):

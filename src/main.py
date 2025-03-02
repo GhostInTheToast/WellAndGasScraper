@@ -2,14 +2,14 @@ import time
 import random
 import logging
 from scraper import scrape_well_data, read_api_numbers
-from database import insert_well_data
+from database import insert_well_data, read_database
 from src.database import initialize_db
 
 # Set up logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # Main entry point for scraping and inserting well data into the database
-def main():
+def main2():
     """
     Main function for scraping well data for a list of API numbers and inserting it into the database.
 
@@ -52,6 +52,8 @@ def main():
         logging.info(f"Sleeping for {sleep_time:.2f} seconds...\n\n")
         time.sleep(sleep_time)
 
+def main():
+    read_database()
 
 # Running the main function when the script is executed
 if __name__ == "__main__":
